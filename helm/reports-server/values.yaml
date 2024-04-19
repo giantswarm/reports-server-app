@@ -8,6 +8,12 @@ image:
   tag: ""
 
 reports-server:
+  image:
+    registry: gsoci.azurecr.io
+    name: giantswarm/reports-server
+    pullPolicy: IfNotPresent
+    # Default tag is the chart appVersion, if not set here.
+    tag: ""
   postgresql:
     enabled: false
   apiServices:
