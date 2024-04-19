@@ -10,7 +10,7 @@ image:
 reports-server:
   image:
     registry: gsoci.azurecr.io
-    name: giantswarm/reports-server
+    repository: giantswarm/reports-server
     pullPolicy: IfNotPresent
     # Default tag is the chart appVersion, if not set here.
     tag: ""
