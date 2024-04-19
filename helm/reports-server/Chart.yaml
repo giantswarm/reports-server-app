@@ -10,3 +10,6 @@ version: 0.0.0-dev
 annotations:
   application.giantswarm.io/team: "shield"
   config.giantswarm.io/version: 1.x.x
+dependencies:
+  - name: reports-server
+    version: 0.1.0-alpha.1
