@@ -1,12 +1,14 @@
 name: reports-server
-serviceType: managed
-
-project:
-  branch: "[[ .Branch ]]"
-  commit: "[[ .SHA ]]"
 
 image:
-  registry: quay.io
+  registry: gsoci.azurecr.io
   name: giantswarm/reports-server
-  tag: v0.0.1
   pullPolicy: IfNotPresent
+  # Default tag is the chart appVersion, if not set here.
+  tag: ""
+
+reports-server:
+  postgresql:
+    enabled: false
+  apiServices:
+    enabled: false

@@ -5,7 +5,7 @@ description: A Giant Swarm app for deploying the Kyverno Reports Server.
 home: https://github.com/giantswarm/reports-server-app
 icon: https://s.giantswarm.io/app-icons/kyverno/1/light.svg
 sources:
-- https://github.com/kyverno/reports-server
+  - https://github.com/kyverno/reports-server
 version: 0.0.0-dev
 annotations:
   application.giantswarm.io/team: "shield"
