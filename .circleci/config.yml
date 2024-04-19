@@ -8,10 +8,22 @@ workflows:
       - architect/push-to-app-catalog:
           context: architect
           executor: app-build-suite
-          name: package-and-push-chart
-          app_catalog: giantswarm-playground-catalog
-          app_catalog_test: giantswarm-playground-test-catalog
-          chart: "{APP-NAME}"
+          name: push-reports-server-app-to-control-plane-catalog
+          app_catalog: control-plane-catalog
+          app_catalog_test: control-plane-test-catalog
+          chart: reports-server
+          # Trigger job on git tag.
+          filters:
+            tags:
+              only: /^v.*/
+
+      - architect/push-to-app-catalog:
+          context: architect
+          executor: app-build-suite
+          name: push-reports-server-app-to-ops-catalog
+          app_catalog: giantswarm-operations-platform-catalog
+          app_catalog_test: giantswarm-operations-platform-test-catalog
+          chart: reports-server
           # Trigger job on git tag.
           filters:
             tags:

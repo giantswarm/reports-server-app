@@ -1,21 +1,17 @@
-[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/{APP-NAME}/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/{APP-NAME}/tree/main)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/reports-server-app/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/reports-server-app/tree/main)
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/giantswarm/reports-server-app/badge)](https://securityscorecards.dev/viewer/?uri=github.com/giantswarm/reports-server-app)
 
-[Read me after cloning this template (GS staff only)](https://handbook.giantswarm.io/docs/dev-and-releng/app-developer-processes/adding_app_to_appcatalog/)
+# Kyverno Report Server chart
 
-# {APP-NAME} chart
-
-Giant Swarm offers a {APP-NAME} App which can be installed in workload clusters.
-Here we define the {APP-NAME} chart with its templates and default configuration.
-
-**What is this app?**
+Kyverno Reports Server is an extension API server which serves certain Kubernetes API server requests via API aggregation. It is used to support storing PolicyReports in an external database instead of in etcd. Removing PolicyReports from etcd [is desirable for a number of stability and performance reasons](https://github.com/kyverno/KDP/pull/51), but keeping them available through the Kubernetes API keeps them readily available for use by report producers/consumers as well as end users.
 
 **Why did we add it?**
 
-**Who can use it?**
+Giant Swarm uses this app to manage the lifecycle of the Kyverno Reports Server as part of our platform. This chart is slightly opinionated for Giant Swarm's use case. Others are welcome to use it, but the official charts should be considered definitive.
 
 ## Installing
 
-There are several ways to install this app onto a workload cluster.
+There are several ways to install this app onto a workload cluster:
 
 - [Using GitOps to instantiate the App](https://docs.giantswarm.io/advanced/gitops/apps/)
 - [Using our web interface](https://docs.giantswarm.io/platform-overview/web-interface/app-platform/#installing-an-app).
@@ -23,48 +19,8 @@ There are several ways to install this app onto a workload cluster.
 
 ## Configuring
 
-### values.yaml
-
-**This is an example of a values file you could upload using our web interface.**
-
-```yaml
-# values.yaml
-
-```
-
-### Sample App CR and ConfigMap for the management cluster
-
-If you have access to the Kubernetes API on the management cluster, you could create
-the App CR and ConfigMap directly.
-
-Here is an example that would install the app to
-workload cluster `abc12`:
-
-```yaml
-# appCR.yaml
-
-```
-
-```yaml
-# user-values-configmap.yaml
-
-```
-
 See our [full reference on how to configure apps](https://docs.giantswarm.io/getting-started/app-platform/app-configuration/) for more details.
-
-## Compatibility
-
-This app has been tested to work with the following workload cluster release versions:
-
-- _add release version_
-
-## Limitations
-
-Some apps have restrictions on how they can be deployed.
-Not following these limitations will most likely result in a broken deployment.
-
-- _add limitation_
 
 ## Credit
 
-- {APP HELM REPOSITORY}
+- <https://github.com/kyverno/reports-server>
