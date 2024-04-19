@@ -15,6 +15,13 @@ reports-server:
     # Default tag is the chart appVersion, if not set here.
     tag: ""
   postgresql:
-    enabled: false
+    enabled: false  # A PostgreSQL cluster is deployed using CNPG resources, defined below.
   apiServices:
     enabled: false
+
+postgres:
+  cnpg:
+    enabled: true
+    instances: 2
+    storage:
+      size: 1Gi
