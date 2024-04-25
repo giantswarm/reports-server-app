@@ -47,28 +47,28 @@ spec:
             {{- end }}
             - --cert-dir=/tmp
             - --secure-port=4443
-          {{- if .Values.db.secretName }}
+          {{- if .Values.config.db.secretName }}
           env:
             - name: PG_HOST
               valueFrom:
                 secretKeyRef:
-                  key: {{ .Values.db.hostSecretKeyName }}
-                  name: {{ .Values.db.secretName }}
+                  key: {{ .Values.config.db.hostSecretKeyName }}
+                  name: {{ .Values.config.db.secretName }}
             - name: PG_DATABASE
               valueFrom:
                 secretKeyRef:
-                  key: {{ .Values.db.dbNameSecretKeyName }}
-                  name: {{ .Values.db.secretName }}
+                  key: {{ .Values.config.db.dbNameSecretKeyName }}
+                  name: {{ .Values.config.db.secretName }}
             - name: PG_USER
               valueFrom:
                 secretKeyRef:
-                  key: {{ .Values.db.userSecretKeyName }}
-                  name: {{ .Values.db.secretName }}
+                  key: {{ .Values.config.db.userSecretKeyName }}
+                  name: {{ .Values.config.db.secretName }}
             - name: PG_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  key: {{ .Values.db.passwordSecretKeyName }}
-                  name: {{ .Values.db.secretName }}
+                  key: {{ .Values.config.db.passwordSecretKeyName }}
+                  name: {{ .Values.config.db.secretName }}
           {{- end}}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
