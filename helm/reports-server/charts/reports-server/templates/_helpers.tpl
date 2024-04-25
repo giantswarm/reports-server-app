@@ -66,7 +66,7 @@ Database config is injected into the environment, if a secret ref is set. Otherw
 */}}
 {{- define "reports-server.dbHost" -}}
 {{- if .Values.config.db.secretName }}
-$(PG_HOST)
+{{- printf "%s" "$(PG_HOST)" }}
 {{- else }}
 {{- default (printf "%s-postgresql.%s" $.Release.Name $.Release.Namespace ) .Values.config.db.host }}
 {{- end }}
@@ -74,7 +74,7 @@ $(PG_HOST)
 
 {{- define "reports-server.dbName" -}}
 {{- if .Values.config.db.secretName }}
-$(PG_DATABASE)
+{{- printf "%s" "$(PG_DATABASE)" }}
 {{- else }}
 {{- .Values.config.db.name }}
 {{- end }}
@@ -82,7 +82,7 @@ $(PG_DATABASE)
 
 {{- define "reports-server.dbUser" -}}
 {{- if .Values.config.db.secretName }}
-$(PG_USER)
+{{- printf "%s" "$(PG_USER)" }}
 {{- else }}
 {{- .Values.config.db.user }}
 {{- end }}
@@ -90,7 +90,7 @@ $(PG_USER)
 
 {{- define "reports-server.dbPassword" -}}
 {{- if .Values.config.db.secretName }}
-$(PG_PASSWORD)
+{{- printf "%s" "$(PG_PASSWORD)" }}
 {{- else }}
 {{- .Values.config.db.password }}
 {{- end }}
