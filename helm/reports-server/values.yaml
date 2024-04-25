@@ -18,6 +18,10 @@ reports-server:
     enabled: false  # A PostgreSQL cluster is deployed using CNPG resources, defined below.
   apiServices:
     enabled: false
+  config:
+    debug: false
+    db:
+      secretName: "reports-server-app"
 
 postgres:
   cnpg:

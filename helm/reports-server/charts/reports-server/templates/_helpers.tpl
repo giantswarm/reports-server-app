@@ -60,3 +60,36 @@ Create the name of the service account to use
 {{- default "default" .Values.serviceAccount.name }}
 {{- end }}
 {{- end }}
+
+{{/*
+Database config is injected into the environment, if a secret ref is set.
+Otherwise, Helm values are used directly.
+*/}}
+{{- define "reports-server.dbHost" -}}
+{{- if .Values.db.secretName }}
+$(PG_HOST)
+{{- else }}
+{{- default printf ("%s-postgresql.%s" $.Release.Name $.Release.Namespace ) .Values.config.db.host }}
+{{- end }}
+{{- end }}
+
+{{- define "reports-server.dbName" -}}
+{{- if .Values.db.secretName }}
+$(PG_DATABASE)
+{{- else }}
+{{ .Values.config.db.name }}
+{{- end }}
+
+{{- define "reports-server.dbUser" -}}
+{{- if .Values.db.secretName }}
+$(PG_USER)
+{{- else }}
+{{ .Values.config.db.user }}
+{{- end }}
+
+{{- define "reports-server.dbPassword" -}}
+{{- if .Values.db.secretName }}
+$(PG_PASSWORD)
+{{- else }}
+{{ .Values.config.db.password }}
+{{- end }}
