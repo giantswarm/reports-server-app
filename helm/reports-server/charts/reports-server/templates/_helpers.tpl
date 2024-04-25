@@ -76,7 +76,7 @@ $(PG_HOST)
 {{- if .Values.config.db.secretName }}
 $(PG_DATABASE)
 {{- else }}
-{{ .Values.config.db.name }}
+{{- .Values.config.db.name }}
 {{- end }}
 {{- end }}
 
@@ -84,7 +84,7 @@ $(PG_DATABASE)
 {{- if .Values.config.db.secretName }}
 $(PG_USER)
 {{- else }}
-{{ .Values.config.db.user }}
+{{- .Values.config.db.user }}
 {{- end }}
 {{- end }}
 
@@ -92,6 +92,6 @@ $(PG_USER)
 {{- if .Values.config.db.secretName }}
 $(PG_PASSWORD)
 {{- else }}
-{{ .Values.config.db.password }}
+{{- .Values.config.db.password }}
 {{- end }}
 {{- end }}
