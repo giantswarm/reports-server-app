@@ -62,14 +62,13 @@ Create the name of the service account to use
 {{- end }}
 
 {{/*
-Database config is injected into the environment, if a secret ref is set.
-Otherwise, Helm values are used directly.
+Database config is injected into the environment, if a secret ref is set. Otherwise, Helm values are used directly.
 */}}
 {{- define "reports-server.dbHost" -}}
 {{- if .Values.db.secretName }}
 $(PG_HOST)
 {{- else }}
-{{- default printf ("%s-postgresql.%s" $.Release.Name $.Release.Namespace ) .Values.config.db.host }}
+{{- default (printf "%s-postgresql.%s" $.Release.Name $.Release.Namespace ) .Values.config.db.host }}
 {{- end }}
 {{- end }}
 
