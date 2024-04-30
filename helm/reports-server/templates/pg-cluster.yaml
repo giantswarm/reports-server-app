@@ -9,4 +9,13 @@ spec:
 
   storage:
     size: {{ .Values.postgres.cnpg.storage.size }}
+
+  monitoring:
+    enablePodMonitor: {{ .Values.postgres.cnpg.monitoring.podMonitor.enable }}
+    podMonitorAdditionalLabels:
+    {{- with .Values.monitoring.podMonitorAdditionalLabels }}
+    {{- toYaml . | nindent 6 }}
+    {{- end}}
+    grafanaDashboard:
+      create: {{ .Values.postgres.cnpg.monitoring.grafanaDashboard.enable }}
 {{- end -}}

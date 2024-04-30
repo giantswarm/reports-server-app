@@ -25,3 +25,9 @@ postgres:
     instances: 2
     storage:
       size: 1Gi
+    monitoring:
+      grafanaDashboard:
+        enabled: true
+      podMonitor:
+        enabled: true
+        labels: {}
