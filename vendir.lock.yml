@@ -2,10 +2,10 @@ apiVersion: vendir.k14s.io/v1alpha1
 directories:
 - contents:
   - git:
-      commitTitle: release v0.1.0-alpha.1 (#75)...
-      sha: 5905a17cfd6af3399fbbc9b04efe3e0cc8baaa73
+      commitTitle: Merge branch 'kyverno:main' into main
+      sha: f045abbea3f0c614fcd0864bfebf26ff400be20a
       tags:
-      - reports-server-chart-0.1.0-alpha.1
+      - reports-server-chart-0.1.0-alpha.1-11-gf045abb
     path: .
   path: helm/reports-server/charts/reports-server
 kind: LockConfig
