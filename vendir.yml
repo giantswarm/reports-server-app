@@ -6,7 +6,7 @@ directories:
   - path: .
     git:
       url: https://github.com/giantswarm/reports-server-upstream
-      ref: reports-server-chart-0.1.0-alpha.1
+      ref: main
     includePaths:
       - charts/reports-server/**/*
     newRootPath: charts/reports-server
