@@ -13,7 +13,7 @@ spec:
   monitoring:
     enablePodMonitor: {{ .Values.postgres.cnpg.monitoring.podMonitor.enable }}
     podMonitorAdditionalLabels:
-    {{- with .Values.monitoring.podMonitorAdditionalLabels }}
+    {{- with .Values.postgres.cnpg.monitoring.podMonitor.labels }}
     {{- toYaml . | nindent 6 }}
     {{- end}}
     grafanaDashboard:
