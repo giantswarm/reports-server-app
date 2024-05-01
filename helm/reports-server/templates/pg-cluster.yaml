@@ -1,0 +1,21 @@
+{{- if .Values.postgres.cnpg.enabled -}}
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "reports-server.fullname" . }}
+  namespace: {{ $.Release.Namespace }}
+spec:
+  instances: {{ .Values.postgres.cnpg.instances }}
+
+  storage:
+    size: {{ .Values.postgres.cnpg.storage.size }}
+
+  monitoring:
+    enablePodMonitor: {{ .Values.postgres.cnpg.monitoring.podMonitor.enabled }}
+    podMonitorAdditionalLabels:
+    {{- with .Values.postgres.cnpg.monitoring.podMonitor.labels }}
+    {{- toYaml . | nindent 6 }}
+    {{- end}}
+    grafanaDashboard:
+      create: {{ .Values.postgres.cnpg.monitoring.grafanaDashboard.enabled }}
+{{- end -}}
