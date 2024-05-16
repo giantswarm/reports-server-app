@@ -18,4 +18,16 @@ spec:
     {{- end}}
     grafanaDashboard:
       create: {{ .Values.postgres.cnpg.monitoring.grafanaDashboard.enabled }}
+
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ImageCatalog
+    major: {{ .Values.postgres.cnpg.imageCatalogRef.major }}
+    name: {{ .Values.postgres.cnpg.imageCatalogRef.name }}
+  
+  # Shutdown behavior is optimized for fast recovery time, at the expense of potential data loss.
+  smartShutdownTimeout: 180
+  stopDelay: 300
+  switchoverDelay: {{ .Values.postgres.cnpg.switchoverDelay }}
+
 {{- end -}}
