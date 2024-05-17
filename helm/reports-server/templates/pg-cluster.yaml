@@ -4,6 +4,8 @@ kind: Cluster
 metadata:
   name: {{ include "reports-server.fullname" . }}
   namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "reports-server.labels" . | nindent 4 }}
 spec:
   instances: {{ .Values.postgres.cnpg.instances }}
 
@@ -29,5 +31,4 @@ spec:
   smartShutdownTimeout: 180
   stopDelay: 300
   switchoverDelay: {{ .Values.postgres.cnpg.switchoverDelay }}
-
 {{- end -}}
