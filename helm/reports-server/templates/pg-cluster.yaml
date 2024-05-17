@@ -4,6 +4,8 @@ kind: Cluster
 metadata:
   name: {{ include "reports-server.fullname" . }}
   namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "reports-server.labels" . | nindent 4 }}
 spec:
   instances: {{ .Values.postgres.cnpg.instances }}
 
@@ -18,4 +20,15 @@ spec:
     {{- end}}
     grafanaDashboard:
       create: {{ .Values.postgres.cnpg.monitoring.grafanaDashboard.enabled }}
+
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ClusterImageCatalog
+    major: {{ .Values.postgres.cnpg.imageCatalogRef.major }}
+    name: {{ .Values.postgres.cnpg.imageCatalogRef.name }}
+  
+  # Shutdown behavior is optimized for fast recovery time, at the expense of potential data loss.
+  smartShutdownTimeout: 180
+  stopDelay: 300
+  switchoverDelay: {{ .Values.postgres.cnpg.switchoverDelay }}
 {{- end -}}
