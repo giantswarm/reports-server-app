@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: {{ include "reports-server.fullname" . }}
+  name: {{ include "reports-server.pgClusterName" . }}
   namespace: {{ $.Release.Namespace }}
   labels:
     {{- include "reports-server.labels" . | nindent 4 }}

@@ -35,3 +35,10 @@ giantswarm.io/managed-by: {{ .Release.Name | quote }}
 giantswarm.io/service-type: {{ .Values.serviceType }}
 helm.sh/chart: {{ include "chart" . | quote }}
 {{- end -}}
+
+{{/*
+Template the Postgres cluster name used by reports-server.
+*/}}
+{{- define "reports-server.pgClusterName" -}}
+{{- include "reports-server.fullname" . -}}-postgres
+{{- end }}

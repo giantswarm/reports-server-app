@@ -47,6 +47,9 @@ postgres:
       name: gs-postgresql
     switchoverDelay: 60
 
+ciliumNetworkPolicy:
+  enabled: true
+
 vpa:
   enabled: true
   containerPolicies:
