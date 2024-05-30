@@ -1,0 +1,89 @@
+{{ if .Values.ciliumNetworkPolicy.enabled }}
+# This policy targets the reports-server application pods.
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ include "reports-server.fullname" . }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+       {{- include "reports-server.selectorLabels" . | nindent 6 }}
+  egress:
+    # Allow egress to database pods.
+    # This assumes the Postgres cluster is the CNPG cluster included in this app. A separate policy is needed if using other Postgres clusters.
+    - toEndpoints:
+        - matchLabels:        
+            cnpg.io/cluster: {{ include "reports-server.pgClusterName" . }}
+      toPorts:
+      - ports:
+        - port: "5432"
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: coredns
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: k8s-dns-node-cache
+      toPorts:
+        - ports:
+            - port: "1053"
+              protocol: UDP
+            - port: "1053"
+              protocol: TCP
+            - port: "53"
+              protocol: UDP
+            - port: "53"
+              protocol: TCP
+    - toEntities:
+        - kube-apiserver
+  ingress:
+  - fromEntities:
+    - cluster
+    - kube-apiserver
+    - remote-node
+    toPorts:
+    - ports:
+      - port: "4443"
+{{ if .Values.postgres.cnpg.enabled -}}
+---
+# This policy targets PostgreSQL database pods managed outside this app, but deployed from this app's CNPG Cluster resource.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: {{ include "reports-server.fullname" . }}-pg-cluster
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  endpointSelector:
+    matchLabels:
+      cnpg.io/cluster: {{ include "reports-server.pgClusterName" . }}
+      cnpg.io/podRole: instance
+  ingress:
+    # Allow ingress to the reports-server Postgres cluster from a reports-server application pod in the same namespace.
+    - fromEndpoints:
+        - matchLabels:
+            {{- include "reports-server.selectorLabels" . | nindent 12 }}
+      toPorts:
+        - ports:
+            - port: "5432"
+    # Allow ingress from other CNPG cluster members (including join pods).
+    - fromEndpoints:
+        - matchLabels:
+            cnpg.io/cluster: {{ include "reports-server.pgClusterName" . }}
+      toPorts:
+        - ports:
+            - port: "5432"
+  egress:
+    # Allow egress to other CNPG cluster members.
+    - toEndpoints:
+        - matchLabels:        
+            cnpg.io/cluster: {{ include "reports-server.pgClusterName" . }}
+      toPorts:
+        - ports:
+            - port: "5432"
+{{ end }}
+{{ end }}

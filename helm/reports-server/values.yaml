@@ -21,7 +21,7 @@ reports-server:
   config:
     debug: false
     db:
-      secretName: "reports-server-app"
+      secretName: "reports-server-postgres-app"
   resources:
     limits:
       cpu: 100m
@@ -46,6 +46,9 @@ postgres:
       major: 16
       name: gs-postgresql
     switchoverDelay: 60
+
+ciliumNetworkPolicy:
+  enabled: true
 
 vpa:
   enabled: true
