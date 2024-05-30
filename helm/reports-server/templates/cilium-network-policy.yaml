@@ -20,9 +20,13 @@ spec:
       toPorts:
       - ports:
         - port: "5432"
+    - toEntities:
+        - kube-apiserver
   ingress:
   - fromEntities:
     - cluster
+    - kube-apiserver
+    - remote-node
     toPorts:
     - ports:
       - port: "4443"
