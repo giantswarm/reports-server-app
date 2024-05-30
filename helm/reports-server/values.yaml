@@ -21,7 +21,7 @@ reports-server:
   config:
     debug: false
     db:
-      secretName: "reports-server-app"
+      secretName: "reports-server-postgres-app"
   resources:
     limits:
       cpu: 100m
