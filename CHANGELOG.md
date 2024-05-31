@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add Cilium Network Policies for reports-server and managed Postgres instances.
+- Push to AWS app collection.
 
 ## [0.0.1] - 2024-05-17
 

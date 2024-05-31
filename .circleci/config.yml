@@ -28,3 +28,17 @@ workflows:
           filters:
             tags:
               only: /^v.*/
+
+      - architect/push-to-app-collection:
+          name: aws-app-collection
+          context: "architect"
+          app_name: "reports-server"
+          app_namespace: "kyverno"
+          app_collection_repo: "aws-app-collection"
+          requires:
+            - push-reports-server-app-to-control-plane-catalog
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/
