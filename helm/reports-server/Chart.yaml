@@ -1,15 +1,15 @@
 apiVersion: v2
-appVersion: 0.0.1
+appVersion: v0.1.6
 name: reports-server
 description: A Giant Swarm app for deploying the Kyverno Reports Server.
 home: https://github.com/giantswarm/reports-server-app
 icon: https://s.giantswarm.io/app-icons/kyverno/1/light.svg
 sources:
   - https://github.com/kyverno/reports-server
-version: 0.0.3
+version: 0.0.4
 annotations:
   application.giantswarm.io/team: "shield"
   config.giantswarm.io/version: 1.x.x
 dependencies:
   - name: reports-server
-    version: 0.1.0-alpha.1
+    version: 0.1.6
