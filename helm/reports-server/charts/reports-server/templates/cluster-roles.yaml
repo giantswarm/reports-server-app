@@ -1,7 +1,6 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-metadata:
   name: {{ include "reports-server.fullname" . }}
   labels:
     rbac.authorization.k8s.io/aggregate-to-admin: 'true'
@@ -23,6 +22,31 @@ rules:
     - update
     - watch
     - deletecollection
+- apiGroups:
+    - ""
+  resources:
+    - namespaces
+  verbs:
+    - get
+- apiGroups:
+    - apiregistration.k8s.io
+  resources:
+    - apiservices
+  verbs:
+    - create
+- apiGroups:
+    - apiregistration.k8s.io
+  resources:
+    - apiservices
+  verbs:
+    - get
+    - delete
+    - update
+    - patch
+  resourceNames:
+    - v1.reports.kyverno.io
+    - v1alpha2.wgpolicyk8s.io
+    - v1alpha1.openreports.io
 - apiGroups:
     - wgpolicyk8s.io
   resources:
