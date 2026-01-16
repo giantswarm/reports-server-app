@@ -42,9 +42,12 @@ postgres:
       podMonitor:
         enabled: true
         labels: {}
-    imageCatalogRef:
-      major: 16
-      name: gs-postgresql
+    image:
+      # used by renovate
+      # registry: gsoci.azurecr.io
+      registry: gsoci.azurecr.io
+      repository: giantswarm/postgresql-cnpg
+      tag: 18.1
     switchoverDelay: 60
 
 ciliumNetworkPolicy:
