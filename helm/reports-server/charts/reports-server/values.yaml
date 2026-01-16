@@ -274,7 +274,7 @@ apiServicesManagement:
     # -- Image repository
     repository: kubectl
     # -- Image tag
-    tag: v1.34.1
+    tag: v1.35.0
     # -- (string) Image pull policy
     # Defaults to image.pullPolicy if omitted
     pullPolicy: ~
