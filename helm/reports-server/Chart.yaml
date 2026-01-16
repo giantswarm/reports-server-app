@@ -6,7 +6,7 @@ home: https://github.com/giantswarm/reports-server-app
 icon: https://s.giantswarm.io/app-icons/kyverno/1/light.svg
 sources:
   - https://github.com/kyverno/reports-server
-version: 0.0.4
+version: 0.1.0
 annotations:
   application.giantswarm.io/team: "shield"
   config.giantswarm.io/version: 1.x.x
