@@ -8,10 +8,9 @@ sources:
   - https://github.com/kyverno/reports-server
 version: 0.1.0
 annotations:
-  application.giantswarm.io/team: "shield"
-  config.giantswarm.io/version: 1.x.x
   io.giantswarm.application.audience: all
   io.giantswarm.application.managed: "true"
+  io.giantswarm.application.team: "shield"
 dependencies:
   - name: reports-server
     version: 0.1.6
