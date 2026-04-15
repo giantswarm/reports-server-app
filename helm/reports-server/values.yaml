@@ -14,6 +14,11 @@ reports-server:
     pullPolicy: IfNotPresent
     # Default tag is the chart appVersion, if not set here.
     tag: ""
+  metrics:
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        observability.giantswarm.io/tenant: giantswarm
   postgresql:
     enabled: false  # A PostgreSQL cluster is deployed using CNPG resources, defined below.
   apiServices:
@@ -41,7 +46,8 @@ postgres:
         enabled: true
       podMonitor:
         enabled: true
-        labels: {}
+        labels:
+          observability.giantswarm.io/tenant: giantswarm
     image:
       # used by renovate
       # registry: gsoci.azurecr.io
