@@ -18,6 +18,7 @@ reports-server:
     serviceMonitor:
       enabled: true
       additionalLabels:
+        application.giantswarm.io/team: shield
         observability.giantswarm.io/tenant: giantswarm
   postgresql:
     enabled: false  # A PostgreSQL cluster is deployed using CNPG resources, defined below.
@@ -47,6 +48,7 @@ postgres:
       podMonitor:
         enabled: true
         labels:
+          application.giantswarm.io/team: shield
           observability.giantswarm.io/tenant: giantswarm
     image:
       # used by renovate
