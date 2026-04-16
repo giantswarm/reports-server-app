@@ -1,0 +1,33 @@
+{{- if .Values.postgres.cnpg.enabled -}}
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: {{ include "reports-server.pgClusterName" . }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "reports-server.labels" . | nindent 4 }}
+spec:
+  instances: {{ .Values.postgres.cnpg.instances }}
+
+  storage:
+    size: {{ .Values.postgres.cnpg.storage.size }}
+
+  monitoring:
+    enablePodMonitor: {{ .Values.postgres.cnpg.monitoring.podMonitor.enabled }}
+    podMonitorAdditionalLabels:
+    {{- with .Values.postgres.cnpg.monitoring.podMonitor.labels }}
+    {{- toYaml . | nindent 6 }}
+    {{- end}}
+    grafanaDashboard:
+      create: {{ .Values.postgres.cnpg.monitoring.grafanaDashboard.enabled }}
+
+  image:
+    registry: {{ .Values.postgres.cnpg.image.registry }}
+    repository: {{ .Values.postgres.cnpg.image.repository }}
+    tag: {{ .Values.postgres.cnpg.image.tag }}
+
+  # Shutdown behavior is optimized for fast recovery time, at the expense of potential data loss.
+  smartShutdownTimeout: 180
+  stopDelay: 300
+  switchoverDelay: {{ .Values.postgres.cnpg.switchoverDelay }}
+{{- end -}}

@@ -1,0 +1,6 @@
+dependencies:
+- name: reports-server
+  repository: ""
+  version: 0.1.6
+digest: sha256:c9f729920466ad381b6dac247ec596471eec6dd9c4b01be5d2206e882d643606
+generated: "2026-01-16T14:14:23.951521081-08:00"

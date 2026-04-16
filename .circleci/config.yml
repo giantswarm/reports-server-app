@@ -1,0 +1,54 @@
+version: 2.1
+orbs:
+  architect: giantswarm/architect@6.15.0
+
+workflows:
+  package-and-push-chart-on-tag:
+    jobs:
+    - architect/push-to-app-catalog:
+        context: architect
+        executor: app-build-suite
+        name: push-reports-server-app-to-control-plane-catalog
+        app_catalog: control-plane-catalog
+        app_catalog_test: control-plane-test-catalog
+        chart: reports-server
+          # Trigger job on git tag.
+        filters:
+          tags:
+            only: /^v.*/
+
+          branches:
+            ignore:
+            - main
+            - master
+    - architect/push-to-app-catalog:
+        context: architect
+        executor: app-build-suite
+        name: push-reports-server-app-to-ops-catalog
+        app_catalog: giantswarm-operations-platform-catalog
+        app_catalog_test: giantswarm-operations-platform-test-catalog
+        chart: reports-server
+          # Trigger job on git tag.
+        filters:
+          tags:
+            only: /^v.*/
+
+          branches:
+            ignore:
+            - main
+            - master
+
+    - architect/push-to-app-catalog:
+        context: architect
+        executor: app-build-suite
+        name: push-reports-server-chart-to-default-catalog
+        app_catalog: default-catalog
+        app_catalog_test: default-test-catalog
+        persist_chart_archive: true
+        chart: reports-server
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore:
+            - main

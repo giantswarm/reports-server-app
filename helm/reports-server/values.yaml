@@ -1,0 +1,77 @@
+name: reports-server
+
+image:
+  registry: gsoci.azurecr.io
+  name: giantswarm/reports-server
+  pullPolicy: IfNotPresent
+  # Default tag is the chart appVersion, if not set here.
+  tag: ""
+
+reports-server:
+  image:
+    registry: gsoci.azurecr.io
+    repository: giantswarm/reports-server
+    pullPolicy: IfNotPresent
+    # Default tag is the chart appVersion, if not set here.
+    tag: ""
+  postgresql:
+    enabled: false  # A PostgreSQL cluster is deployed using CNPG resources, defined below.
+  apiServices:
+    enabled: false
+  config:
+    debug: false
+    db:
+      secretName: "reports-server-postgres-app"
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+postgres:
+  cnpg:
+    enabled: true
+    instances: 2
+    storage:
+      size: 1Gi
+    monitoring:
+      grafanaDashboard:
+        enabled: true
+      podMonitor:
+        enabled: true
+        labels: {}
+    image:
+      # used by renovate
+      # registry: gsoci.azurecr.io
+      registry: gsoci.azurecr.io
+      repository: giantswarm/postgresql-cnpg
+      tag: 18.3
+    switchoverDelay: 60
+
+ciliumNetworkPolicy:
+  enabled: true
+
+vpa:
+  enabled: true
+  containerPolicies:
+    minAllowed:
+      cpu: "100m"
+
+monitoring:
+  podLogs:
+    # Enable log collection for monitoring.
+    enabled: true
+
+    # Tenant to use for monitoring
+    tenant: giantswarm
+
+    # Optional additional annotations.
+    annotations: {}
+
+    # Optional additional labels.
+    labels: {}
+
+    # List of relabeling rules for logs.
+    relabelings: []

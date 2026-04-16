@@ -1,0 +1,11 @@
+apiVersion: vendir.k14s.io/v1alpha1
+directories:
+- contents:
+  - git:
+      commitTitle: Merge upstream main (#2)...
+      sha: 88cd569e3339c48357fb4d87ec223f37d2e4fe90
+      tags:
+      - reports-server-chart-0.1.0-alpha.1-31-g88cd569
+    path: .
+  path: helm/reports-server/charts/reports-server
+kind: LockConfig
