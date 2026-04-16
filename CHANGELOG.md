@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update CiliumNetworkPolicy to allow postgres cross-pod health checks.
+- Enable observability platform collection for postgres and reports-server pods.
+
 ## [0.1.1] - 2026-04-10
 
 ### Added
