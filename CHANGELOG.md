@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Prefer scheduling reports-server pods on the same node as their CNPG postgres instance, and prefer spreading reports-server replicas across nodes.
+- Add Giant Swarm team labels to monitoring resources.
+- Disable CNPG operator-managed `PodMonitor` in favor of a new chart-managed `PodMonitor`.
+
 ## [0.1.2] - 2026-04-16
 
 ### Changed
