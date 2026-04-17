@@ -7,38 +7,13 @@ image:
   # Default tag is the chart appVersion, if not set here.
   tag: ""
 
-reports-server:
-  image:
-    registry: gsoci.azurecr.io
-    repository: giantswarm/reports-server
-    pullPolicy: IfNotPresent
-    # Default tag is the chart appVersion, if not set here.
-    tag: ""
-  metrics:
-    serviceMonitor:
-      enabled: true
-      additionalLabels:
-        application.giantswarm.io/team: shield
-        observability.giantswarm.io/tenant: giantswarm
-  postgresql:
-    enabled: false  # A PostgreSQL cluster is deployed using CNPG resources, defined below.
-  apiServices:
-    enabled: false
-  config:
-    debug: false
-    db:
-      secretName: "reports-server-postgres-app"
-  resources:
-    limits:
-      cpu: 100m
-      memory: 128Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-
+# Configuration for the CNPG postgres cluster.
 postgres:
   cnpg:
     enabled: true
+    # Name of the CNPG `Cluster` resource. The corresponding app-user credentials
+    # secret is automatically created by CNPG operator as `<clusterName>-app`.
+    clusterName: &pgClusterName reports-server-postgres
     instances: 2
     storage:
       size: 1Gi
@@ -57,6 +32,58 @@ postgres:
       repository: giantswarm/postgresql-cnpg
       tag: 18.3
     switchoverDelay: 60
+
+reports-server:
+  image:
+    registry: gsoci.azurecr.io
+    repository: giantswarm/reports-server
+    pullPolicy: IfNotPresent
+    # Default tag is the chart appVersion, if not set here.
+    tag: ""
+  metrics:
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        application.giantswarm.io/team: shield
+        observability.giantswarm.io/tenant: giantswarm
+  postgresql:
+    enabled: false  # A PostgreSQL cluster is deployed using CNPG resources, defined above.
+  apiServices:
+    enabled: false
+  config:
+    debug: false
+    db:
+      # Must match `<postgres.cnpg.clusterName>-app`
+      secretName: "reports-server-postgres-app"
+  replicaCount: 2
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  # Prefer co-locating reports-server pods with CNPG postgres instances on the same node,
+  # but avoid scheduling multiple reports-server pods on the same node.
+  affinity:
+    podAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchLabels:
+                cnpg.io/cluster: *pgClusterName
+                cnpg.io/podRole: instance
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            topologyKey: kubernetes.io/hostname
+            labelSelector:
+              matchLabels:
+                app.kubernetes.io/name: reports-server
+                app.kubernetes.io/instance: reports-server
 
 ciliumNetworkPolicy:
   enabled: true

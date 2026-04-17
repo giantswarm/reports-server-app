@@ -8,6 +8,22 @@ workflows:
     - architect/push-to-app-catalog:
         context: architect
         executor: app-build-suite
+        name: push-reports-server-app-to-giantswarm-catalog
+        app_catalog: giantswarm-catalog
+        app_catalog_test: giantswarm-test-catalog
+        chart: reports-server
+          # Trigger job on git tag.
+        filters:
+          tags:
+            only: /^v.*/
+          branches:
+            ignore:
+            - main
+            - master
+
+    - architect/push-to-app-catalog:
+        context: architect
+        executor: app-build-suite
         name: push-reports-server-app-to-control-plane-catalog
         app_catalog: control-plane-catalog
         app_catalog_test: control-plane-test-catalog
@@ -16,11 +32,11 @@ workflows:
         filters:
           tags:
             only: /^v.*/
-
           branches:
             ignore:
             - main
             - master
+
     - architect/push-to-app-catalog:
         context: architect
         executor: app-build-suite
@@ -32,7 +48,6 @@ workflows:
         filters:
           tags:
             only: /^v.*/
-
           branches:
             ignore:
             - main
