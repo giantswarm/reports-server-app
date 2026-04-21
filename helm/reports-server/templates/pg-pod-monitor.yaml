@@ -1,0 +1,24 @@
+{{- if and .Values.postgres.cnpg.enabled .Values.postgres.cnpg.monitoring.podMonitor.enabled -}}
+{{- $clusterName := include "reports-server.pgClusterName" . -}}
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: {{ $clusterName }}-gs
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- include "reports-server.labels" . | nindent 4 }}
+    cnpg.io/cluster: {{ $clusterName }}
+    {{- with .Values.postgres.cnpg.monitoring.podMonitor.labels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  selector:
+    matchLabels:
+      cnpg.io/cluster: {{ $clusterName }}
+      cnpg.io/podRole: instance
+  podMetricsEndpoints:
+    - port: metrics
+      relabelings:
+        - targetLabel: job
+          replacement: {{ $clusterName }}
+{{- end -}}

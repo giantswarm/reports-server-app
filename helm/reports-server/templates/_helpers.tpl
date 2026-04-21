@@ -38,7 +38,9 @@ helm.sh/chart: {{ include "chart" . | quote }}
 
 {{/*
 Template the Postgres cluster name used by reports-server.
+
+Uses `.Values.postgres.cnpg.clusterName` if set, otherwise generates one.
 */}}
 {{- define "reports-server.pgClusterName" -}}
-{{- include "reports-server.fullname" . -}}-postgres
+{{- default (printf "%s-postgres" (include "reports-server.fullname" .)) .Values.postgres.cnpg.clusterName -}}
 {{- end }}

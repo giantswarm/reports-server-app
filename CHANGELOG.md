@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] - 2026-04-21
+
+### Changed
+
+- Prefer scheduling reports-server pods on the same node as their CNPG postgres instance, and prefer spreading reports-server replicas across nodes.
+- Add Giant Swarm team labels to monitoring resources.
+- Disable CNPG operator-managed `PodMonitor` in favor of a new chart-managed `PodMonitor`.
+
 ## [0.1.2] - 2026-04-16
 
 ### Changed
@@ -50,7 +58,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial release using [an unreleased upstream version `f97f31`](https://github.com/kyverno/reports-server/tree/f97f31a8db43d1b70a8ab903b0e11d61679ae75e).
 
-[Unreleased]: https://github.com/giantswarm/reports-server-app/compare/v0.1.2...HEAD
+[Unreleased]: https://github.com/giantswarm/reports-server-app/compare/v0.1.3...HEAD
+[0.1.3]: https://github.com/giantswarm/reports-server-app/compare/v0.1.2...v0.1.3
 [0.1.2]: https://github.com/giantswarm/reports-server-app/compare/v0.1.1...v0.1.2
 [0.1.1]: https://github.com/giantswarm/reports-server-app/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/giantswarm/reports-server-app/compare/v0.0.3...v0.1.0
