@@ -6,16 +6,5 @@
     "github>giantswarm/renovate-presets:disable-upstream-charts.json5"
   ],
   "packageRules": [
-    {
-      "description": "Automerge architect updates",
-      "matchFileNames": [
-        ".circleci/config.yml"
-      ],
-      "matchDepNames": [
-        "architect"
-      ],
-      "groupName": "Architect",
-      "automerge": true
-    }
   ]
 }
