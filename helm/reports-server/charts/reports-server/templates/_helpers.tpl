@@ -130,4 +130,3 @@ valueFrom:
 value: {{ .Values.config.db.password | quote }}
 {{- end }}
 {{- end }}
-
