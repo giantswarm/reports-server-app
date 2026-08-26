@@ -33,7 +33,7 @@ postgres:
       tag: 18.4
     switchoverDelay: 60
 
-reports-server:
+reports-server:  # @schema skipProperties: true; additionalProperties: true
   image:
     registry: gsoci.azurecr.io
     repository: giantswarm/reports-server
