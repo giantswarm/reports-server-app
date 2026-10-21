@@ -12,6 +12,10 @@ spec:
   storage:
     size: {{ .Values.postgres.cnpg.storage.size }}
 
+  ephemeralVolumesSizeLimit:
+    shm: {{ .Values.postgres.cnpg.ephemeralVolumesSizeLimit.shm }}
+    temporaryData: {{ .Values.postgres.cnpg.ephemeralVolumesSizeLimit.temporaryData }}
+
   monitoring:
     grafanaDashboard:
       create: {{ .Values.postgres.cnpg.monitoring.grafanaDashboard.enabled }}

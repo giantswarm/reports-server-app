@@ -32,6 +32,10 @@ postgres:
       repository: giantswarm/postgresql-cnpg
       tag: 18.6
     switchoverDelay: 60
+    # Size limits for the emptyDir volumes CNPG adds to every instance pod.
+    ephemeralVolumesSizeLimit:
+      shm: 256Mi
+      temporaryData: 1Gi
 
 reports-server:  # @schema skipProperties: true; additionalProperties: true
   image:
@@ -60,9 +64,11 @@ reports-server:  # @schema skipProperties: true; additionalProperties: true
     limits:
       cpu: 100m
       memory: 128Mi
+      ephemeral-storage: 512Mi
     requests:
       cpu: 100m
       memory: 128Mi
+      ephemeral-storage: 64Mi
   # Prefer co-locating reports-server pods with CNPG postgres instances on the same node,
   # but avoid scheduling multiple reports-server pods on the same node.
   affinity:
